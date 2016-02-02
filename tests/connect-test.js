@@ -1,11 +1,9 @@
-import test from './base';
+import test, { wait } from './base';
 import React from 'react';
 import PureComponent from 'react-pure-render/component';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 import { createStore } from 'redux'
-import raf from 'raf';
-import asap from 'asap';
 
 import { Provider, connect } from '../src';
 
@@ -44,12 +42,12 @@ test('simple', t => {
 
   t.equal(resNode.textContent, '0');
 
-  asap(() => {
+  wait(() => {
     store.dispatch({type: 'INCREMENT'});
 
     t.equal(resNode.textContent, '0');
 
-    raf(() => {
+    wait(() => {
       t.equal(resNode.textContent, '1');
     });
   });
@@ -70,14 +68,14 @@ test('reverse', t => {
 
   t.equal(resNode.textContent, '0');
 
-  asap(() => {
+  wait(() => {
     store.dispatch({type: 'INCREMENT'});
 
     t.equal(resNode.textContent, '0');
 
     store.dispatch({type: 'DECREMENT'});
 
-    raf(() => {
+    wait(() => {
       t.equal(resNode.textContent, '0');
     });
   });

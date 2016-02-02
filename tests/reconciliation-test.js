@@ -1,11 +1,9 @@
-import test from './base';
+import test, { wait } from './base';
 import React from 'react';
 import PureComponent from 'react-pure-render/component';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 import { createStore } from 'redux'
-import raf from 'raf';
-import asap from 'asap';
 
 import { Provider, connect } from '../src';
 
@@ -20,6 +18,12 @@ function items(state = { items: [ { value: 1} ] }, action) {
 
 @connect(state => state)
 class List extends PureComponent {
+
+  componentDidMount() {
+    this.props.dispatch({
+      type: 'REMOVE'
+    });
+  }
 
   render() {
     return (
@@ -51,13 +55,8 @@ test('reconciliation', t => {
 
   t.plan(1);
 
-  asap(() => {
-    store.dispatch({
-      type: 'REMOVE'
-    });
-
-    raf(() => {
-      t.equal(TestUtils.scryRenderedDOMComponentsWithTag(res, 'li').length, 0);
-    });
+  wait(() => {
+    t.equal(TestUtils.scryRenderedDOMComponentsWithTag(res, 'li').length, 0);
   });
+
 });
