@@ -14,7 +14,7 @@ const dispatchQueue = [];
 
 let asapScheduled = false;
 
-function flushSubscriptionQueue(dispatch) {
+function flushAsapQueue(dispatch) {
   for (const subscribe of subscriptionQueue) {
     subscribe();
   }
@@ -24,6 +24,24 @@ function flushSubscriptionQueue(dispatch) {
   subscriptionQueue.splice(0, subscriptionQueue.length);
   dispatchQueue.splice(0, dispatchQueue.length);
   asapScheduled = false;
+}
+
+function scheduleAsapFlush(dispatch) {
+  if (!asapScheduled) {
+    asapScheduled = true;
+    asap(() => flushAsapQueue(dispatch));
+  }
+}
+
+function makeDispatchAsap(dispatch) {
+  return action => new Promise((resolve, reject) => {
+    dispatchQueue.push({
+      action,
+      resolve,
+      reject
+    });
+    scheduleAsapFlush(dispatch);
+  });
 }
 
 export default (mapProps, mapActions) => {
@@ -55,23 +73,14 @@ export default (mapProps, mapActions) => {
 
       constructor(props, context) {
         super(props, context);
-        const dispatch = action => new Promise((resolve, reject) => {
-          dispatchQueue.push({
-            action,
-            resolve,
-            reject
-          });
-        });
+        const dispatch = makeDispatchAsap(this.context.store.dispatch);
         this.actions = finalMapActions(dispatch, this.props);
         this.state = this.stateFromStore();
       }
 
       componentDidMount() {
         subscriptionQueue.unshift(::this.subscribe);
-        if (!asapScheduled) {
-          asapScheduled = true;
-          asap(() => flushSubscriptionQueue(this.context.store.dispatch));
-        }
+        scheduleAsapFlush(this.context.store.dispatch);
       }
 
       subscribe() {
