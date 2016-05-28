@@ -73,9 +73,9 @@ export default (mapProps, mapActions) => {
 
       constructor(props, context) {
         super(props, context);
-        const dispatch = makeDispatchAsap(this.context.store.dispatch);
-        this.actions = finalMapActions(dispatch, this.props);
-        this.state = this.stateFromStore();
+        const dispatch = makeDispatchAsap(context.store.dispatch);
+        this.actions = finalMapActions(dispatch, props);
+        this.state = this.stateFromStore(props, context);
       }
 
       componentDidMount() {
@@ -113,8 +113,9 @@ export default (mapProps, mapActions) => {
         }
       }
 
-      stateFromStore() {
-        const props = finalMapProps(this.context.store.getState(), this.props);
+      stateFromStore(optProps, optContext) {
+        const context = optContext || this.context;
+        const props = finalMapProps(context.store.getState(), optProps || this.props);
         return { ...props, ...this.actions };
       }
 
