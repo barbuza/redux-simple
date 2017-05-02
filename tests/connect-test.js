@@ -1,8 +1,7 @@
 import test, { wait } from './base';
 import React from 'react';
-import PureComponent from 'react-pure-render/component';
 import ReactDOM from 'react-dom';
-import TestUtils from 'react-addons-test-utils';
+import TestUtils from 'react-dom/test-utils';
 import { createStore } from 'redux'
 
 import { Provider, connect } from '../src';
@@ -19,7 +18,7 @@ function counter(state = { count: 0 }, action) {
 }
 
 @connect(state => state)
-class Foo extends PureComponent {
+class Foo extends React.PureComponent {
 
   render() {
     return <div>{this.props.count}</div>;

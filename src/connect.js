@@ -1,5 +1,4 @@
 import React from 'react';
-import PureComponent from 'react-pure-render/component';
 import hoistStatics from 'hoist-non-react-statics';
 import raf from 'raf';
 import asap from 'asap';
@@ -61,7 +60,7 @@ export default (mapProps, mapActions) => {
   }
 
   return component => {
-    class Wrapper extends PureComponent {
+    class Wrapper extends React.PureComponent {
 
       static WrappedComponent = component;
 

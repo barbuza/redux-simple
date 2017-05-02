@@ -1,16 +1,16 @@
 import React from 'react';
-import PureComponent from 'react-pure-render/component';
+import PropTypes from 'prop-types';
 
 import storeShape from './storeShape';
 
-export default class Provider extends PureComponent {
+export default class Provider extends React.PureComponent {
 
   static propTypes = {
     store: storeShape.isRequired
   };
 
   static childContextTypes = {
-    store: React.PropTypes.object
+    store: PropTypes.object
   };
 
   getChildContext() {

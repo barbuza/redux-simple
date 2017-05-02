@@ -1,8 +1,7 @@
 import test, { wait } from './base';
 import React from 'react';
-import PureComponent from 'react-pure-render/component';
 import ReactDOM from 'react-dom';
-import TestUtils from 'react-addons-test-utils';
+import TestUtils from 'react-dom/test-utils';
 import { createStore } from 'redux'
 
 import { Provider, connect } from '../src';
@@ -17,7 +16,7 @@ function items(state = { items: [ { value: 1} ] }, action) {
 }
 
 @connect(state => state)
-class List extends PureComponent {
+class List extends React.PureComponent {
 
   componentDidMount() {
     this.props.dispatch({
@@ -36,7 +35,7 @@ class List extends PureComponent {
 }
 
 @connect((state, { index }) => ({ value: state.items[index].value }))
-class Item extends PureComponent {
+class Item extends React.PureComponent {
 
   render() {
     return <li>{this.props.value}</li>;

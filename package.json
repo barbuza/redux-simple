@@ -1,10 +1,10 @@
 {
   "name": "redux-simple",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "simplified react-redux with raf batching and reverse subscription order",
   "main": "index.js",
   "scripts": {
-    "prepublish": "babel -d lib src",
+    "prepublish": "in-publish && babel -d lib src || not-in-publish",
     "test": "tape -r babel-register tests/*-test.js | faucet"
   },
   "author": {
@@ -17,13 +17,13 @@
   },
   "license": "ISC",
   "peerDependencies": {
-    "react": "^0.14.0 || ^15.0.0"
+    "prop-types": ">=15.5.8",
+    "react": ">=15.5.4"
   },
   "dependencies": {
-    "asap": "^2.0.4",
-    "hoist-non-react-statics": "^1.2.0",
-    "raf": "^3.2.0",
-    "react-pure-render": "^1.0.2"
+    "asap": ">=2.0.5",
+    "hoist-non-react-statics": ">=1.2.0",
+    "raf": ">=3.3.0"
   },
   "devDependencies": {
     "babel-cli": "^6.10.1",
@@ -37,10 +37,11 @@
     "babel-preset-stage-2": "^6.11.0",
     "babel-register": "^6.9.0",
     "faucet": "0.0.1",
-    "jsdom": "^9.4.1",
-    "react": "^15.2.1",
-    "react-addons-test-utils": "^15.2.1",
-    "react-dom": "^15.2.1",
+    "in-publish": "^2.0.0",
+    "jsdom": "^10.1.0",
+    "prop-types": "^15.5.8",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
     "react-hot-loader": "^1.3.0",
     "redux": "^3.5.2",
     "tape": "^4.6.0"

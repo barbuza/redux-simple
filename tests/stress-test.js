@@ -1,8 +1,7 @@
 import test  from './base';
 import React from 'react';
-import PureComponent from 'react-pure-render/component';
 import ReactDOM from 'react-dom';
-import TestUtils from 'react-addons-test-utils';
+import TestUtils from 'react-dom/test-utils';
 import { createStore } from 'redux'
 
 import { Provider, connect } from '../src';
@@ -19,7 +18,7 @@ function items(state = { loading: false }, action) {
 }
 
 @connect(state => state)
-class Indicator extends PureComponent {
+class Indicator extends React.PureComponent {
 
   render() {
     const { loading } = this.props;
