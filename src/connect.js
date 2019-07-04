@@ -64,7 +64,7 @@ export default (mapProps, mapActions) => {
 
       static WrappedComponent = component;
 
-      static displayName = `connect-raf(${component.name})`;
+      static displayName = `connect-raf(${component.displayName || component.name})`;
 
       static contextTypes = {
         store: storeShape.isRequired
