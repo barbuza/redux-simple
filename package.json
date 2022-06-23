@@ -38,7 +38,7 @@
     "babel-register": "^6.9.0",
     "faucet": "0.0.1",
     "in-publish": "^2.0.0",
-    "jsdom": "^10.1.0",
+    "jsdom": "^16.5.0",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
